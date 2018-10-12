@@ -1,0 +1,378 @@
+/*
+ * GLUT Shapes Demo
+ *
+ * Written by Nigel Stewart November 2003
+ *
+ * This program is test harness for the sphere, cone
+ * and torus shapes in GLUT.
+ *
+ * Spinning wireframe and smooth shaded shapes are
+ * displayed until the ESC or q key is pressed.  The
+ * number of geometry stacks and slices can be adjusted
+ * using the + and - keys.
+ */
+ #include <windows.h>
+#include <iostream>
+#include <stdlib.h>
+#include<math.h>
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+using namespace std;
+
+//Called when a key is pressed
+void handleKeypress(unsigned char key, int x, int y) {
+	switch (key) {
+	case 27: //Escape key
+		exit(0);
+	}
+}
+
+//Initializes 3D rendering
+void initRendering() {
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);	 //Enable color
+	glClearColor(1 , 1 , 1, 1 );  //Change the background
+	gluOrtho2D(0 , 500 , 0 , 500);
+    glMatrixMode(GL_PROJECTION);
+
+}
+
+//Called when the window is resized
+void handleResize(int w, int h) {
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0, (double)w / (double)h, 1.0, 200.0);
+}
+
+
+void circle(float r , float g , float b , int x){
+    float theta ;
+    glPushMatrix() ;
+
+        glColor3f(r , g , b) ;
+        glBegin(GL_POLYGON);
+
+            for(int i = 0 ; i < 360 ; i++){
+
+                theta = i * 3.14 / 180 ;
+                glVertex2f(30*cos(theta) + x , 30*sin(theta) + 250);
+
+            }
+
+        glEnd() ;
+
+    glPopMatrix();
+
+
+}
+float x = 0.0f ;
+float y = 0.0f;		//to translate the square in y axis
+float a = 0.0f ;
+float b = 0.0f ;
+float c = 0.0f ;
+float d = 0.0f ;
+float e = 0.0f ;
+float f = 0.0f ;
+float u = 0.0f ;
+float w = 0.0f ;
+float m = 0.0f ;
+float n = 0.0f ;
+float r = 0.0f ;
+float t = 0.0f ;
+float flag = 0.0f;
+float flag1 = 1.0f ;
+float flag2 = 0.0f ;
+float flag3 = 0.0f ;
+float flag4 = 0.0f ;
+float first = 1.0f ;
+float second = 0.0f ;
+float third = 0.0f ;
+float third_1 = 1.0f ;
+float third_2 = 0.0f ;
+float third_3 = 0.0f ;
+float fourth = 0.0f ;
+float fifth = 0.0f ;
+float fifth_1 = 1.0f ;
+float sixth = 0.0f ;
+float sixth_1 = 1.0f ;
+//Draws the 3D scene
+void drawScene() {
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//glMatrixMode(GL_MODELVIEW);   //Switch to the drawing perspective
+	glLoadIdentity();             //Reset the drawing perspective
+
+	glPushMatrix();
+        if(first){
+            glPushMatrix();
+
+                glTranslatef(0.0f , y , 0.0f);
+                circle(0.02 , 0.06 , 0.28 , 40);            //circle1
+                circle(0.01 , 0.05 , 0.41 , 110);           //circle2
+                if(flag == 0.0f)
+                    if(y < 0.4f)
+                        y += 0.0004f ;
+                    else
+                        flag = 1.0f ;
+                else
+                    if(y > 0.0f)
+                        y -= 0.0004f ;
+                    else{
+                        first = 0.0f ;
+                        flag = 0.0f ;
+                        second = 1.0f ;
+                    }
+
+            glPopMatrix();
+            circle(0.27 , 0.32 , 0.71 , 180 );          //circle3
+            circle(0.0 , 0.0 , 0.0 , 250);              //circle4
+            circle(0.8 , 0.82 , 0.96 , 320);            //circle5
+            circle(0.07 , 0.52 , 0.81 , 390);           //circle6
+            circle(0.53 , 0.59 , 0.97 , 460);           //circle7
+        }
+        if(second){
+            circle(0.02 , 0.06 , 0.28 , 40);                //circle1
+            glPushMatrix();
+                glTranslatef(0.0f , y , 0.0f);
+                circle(0.01 , 0.05 , 0.41 , 110);           //circle2
+                circle(0.27 , 0.32 , 0.71 , 180 );          //circle3
+                if(flag == 0.0f)
+                    if(y < 0.4f)
+                        y += 0.0004f ;
+                    else
+                        flag = 1.0f ;
+                else
+                    if(y > 0.0f)
+                        y -= 0.0004f ;
+                    else{
+                        third = 1.0f ;
+                        flag = 0.0f ;
+                        second = 0.0f ;
+                    }
+
+
+            glPopMatrix();
+            circle(0.0 , 0.0 , 0.0 , 250);              //circle4
+            circle(0.8 , 0.82 , 0.96 , 320);            //circle5
+            circle(0.07 , 0.52 , 0.81 , 390);           //circle6
+            circle(0.53 , 0.59 , 0.97 , 460);           //circle7
+        }
+        if(third){
+            glPushMatrix();
+                glTranslatef(c , d , 0.0f);
+                circle(0.02 , 0.06 , 0.28 , 40);            //circle1
+            glPopMatrix();
+            glPushMatrix();
+                glTranslatef(e , f , 0.0f);
+                circle(0.01 , 0.05 , 0.41 , 110);           //circle2
+            glPopMatrix();
+                glPushMatrix();
+                    glTranslatef(x , y , 0.0f);
+                    circle(0.27 , 0.32 , 0.71 , 180 );          //circle3
+                glPopMatrix();
+                glPushMatrix();
+                    glTranslatef(a , b , 0.0f);
+                    circle(0.0 , 0.0 , 0.0 , 250);              //circle4
+                glPopMatrix();
+                if(flag == 0.0f)
+                    if(y < 0.4f){
+                        y += 0.0004f ;
+                        b = y ;
+                    }
+                    else
+                        flag = 1.0f ;
+                else{
+                    if(third_1){
+                        if(y > 0.0f)
+                            y -= 0.0004f ;
+                        else if(x < 0.27f)
+                            x += 0.0004f ;
+                        else if(a > -0.27f)
+                            a -= 0.0004f ;
+                        else if(b > 0.0f)
+                            b -= 0.0004f ;
+                        else{
+                            third_1 = 0.0f ;
+                            third_2 = 1.0f ;
+                            flag1 = 0.0f ;
+                        }
+
+                    }
+                    if(flag1 == 0.0f)
+                        if(b < 0.4f){
+                            b += 0.0004f ;
+                            f = b ;
+                        }
+                        else
+                            flag1 = 1.0f ;
+                    else if(third_2){
+                        if(b > 0.0f)
+                            b -= 0.0004f ;
+                        else if(a > -0.54f)
+                            a -= 0.0004f ;
+                        else if(e < 0.27f)
+                            e += 0.0004f ;
+                        else if(f > 0.0f)
+                            f -= 0.0004f ;
+                        else{
+                            third_2 = 0.0f ;
+                            third_3 = 1.0f ;
+                            flag2 = 1.0f ;
+                        }
+
+                    }
+                    if(flag2)
+                        if(b < 0.4f){
+                            b += 0.0004f ;
+                            d = b ;
+                        }
+                        else
+                            flag2 = 0.0f ;
+                    else if(third_3){
+                        if(b > 0.0f)
+                            b -= 0.0004f ;
+                        else if(a > -0.81f)
+                            a -= 0.0004f ;
+                        else if(c < 0.27f)
+                            c += 0.0004f ;
+                        else if(d > 0.0f)
+                            d -= 0.0004f ;
+                        else{
+                            third_3 = 0.0f ;
+                            fourth = 1.0f ;
+                        }
+
+                    }
+
+
+
+                }
+            glPushMatrix();
+            glTranslatef(w , u , 0.0f);
+            circle(0.8 , 0.82 , 0.96 , 320);            //circle5
+            glPopMatrix();
+            if(fourth){
+
+                if(flag3 == 0.0f)
+                    if(u < 0.4f){
+                        u += 0.0004f ;
+                        y = u ;
+                    }
+                    else
+                        flag3 = 1.0f ;
+                else
+                    if(y > 0.0f){
+                        y -= 0.0004f ;
+                        u = y ;
+                    }
+                    else{
+                        fourth = 0.0f ;
+                        fifth = 1.0f ;
+                        flag3= 0.0f ;
+                    }
+
+            }
+            glPushMatrix();
+            glTranslatef(m , n , 0.0f);
+            circle(0.07 , 0.52 , 0.81 , 390);           //circle6
+            glPopMatrix();
+            if(fifth){
+
+                if(flag3 == 0.0f)
+                    if(n < 0.4f){
+                        n += 0.0004f ;
+                        u = n ;
+                    }
+                    else
+                        flag3 = 1.0f ;
+                else{
+                    if(fifth_1){
+                        if(u > 0.0f)
+                            u -= 0.0004f ;
+                        else if(w < 0.27f)
+                            w += 0.0004f ;
+                        else if(m > -0.27f)
+                            m -= 0.0004f ;
+                        else if(n > 0.0f)
+                            n -= 0.0004f ;
+                        else{
+                            fifth_1 = 0.0f ;
+                            sixth = 1.0f ;
+                            fifth = 0.0f ;
+                        }
+
+                    }
+
+            }
+            }
+            glPushMatrix();
+            glTranslatef(r , t , 0.0f);
+            circle(0.53 , 0.59 , 0.97 , 460);           //circle7
+            glPopMatrix();
+            if(sixth){
+
+                if(flag4 == 0.0f)
+                    if(t < 0.4f){
+                        t += 0.0004f ;
+                        u = t ;
+                    }
+                    else
+                        flag4 = 1.0f ;
+                else{
+                    if(sixth_1){
+                        if(u > 0.0f)
+                            u -= 0.0004f ;
+                        else if(w < 0.54f)
+                            w += 0.0004f ;
+                        else if(r > -0.27f)
+                            r -= 0.0004f ;
+                        else if(t > 0.0f)
+                            t -= 0.0004f ;
+                        else{
+                            sixth_1 = 0.0f ;
+                            sixth = 0.0f ;
+                        }
+
+                    }
+
+            }
+            }
+        }
+
+
+
+	glPopMatrix();
+	glutPostRedisplay();              //Tell GLUT that the display has changed
+	//glutTimerFunc(25, 0, 0);          //Tell GLUT to call update again in 25 milliseconds
+    glutSwapBuffers();
+    glFlush() ;
+}
+
+
+int main(int argc, char** argv) {
+	//Initialize GLUT
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowPosition(0,0) ;
+	glutInitWindowSize(500, 500);
+
+	//Create the window
+	glutCreateWindow("Insertion Sort Algorithm");
+	initRendering();
+
+	//Set handler functions
+	glutDisplayFunc(drawScene);
+	glutKeyboardFunc(handleKeypress);
+	glutReshapeFunc(handleResize);
+
+
+
+	glutMainLoop();
+	return 0;
+}
